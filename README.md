@@ -9,5 +9,5 @@
 
 
 ### 기록
-- 인프런 백기선 강의를 통해 학습
+- 인프런 백기선님 강의를 통해 학습
 - 무료 로고 출처 <a href='htttps://.pngtree.com/so/손으로-그린'>손으로 그린 png에서 pngtree.com</a>
