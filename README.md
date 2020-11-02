@@ -7,8 +7,21 @@
 - mailsender 오류 
 - 테스트 코드 보충 
 
-## 예시
+## 서비스 미리보기
 - ![ezgif com-gif-maker](https://user-images.githubusercontent.com/62214428/97904717-3ced3800-1d84-11eb-8576-148625c0477a.gif)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
