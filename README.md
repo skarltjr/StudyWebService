@@ -9,7 +9,7 @@
 - 테스트 코드 보충 
 - Readme GIF 변경
 
-## ERD
+## ERD /
 - ![erd](https://user-images.githubusercontent.com/62214428/98022992-aaaf6780-1e49-11eb-9ebf-733222f4855c.jpg)
 
 ## 서비스 미리보기
