@@ -12,9 +12,9 @@
 
 
 ## Task
-- mailsender 오류 
-- 테스트 코드 보충 
-- Readme GIF 변경
+- mailsender 오류 1 
+- 테스트 코드 보충 2
+- Readme GIF 변경 3
 
 
 
