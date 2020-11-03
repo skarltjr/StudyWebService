@@ -8,7 +8,9 @@
 - mailsender 오류 
 - 테스트 코드 보충 
 - Readme GIF 변경
-- 엔티티 설계도 그림 추가 
+
+## ERD
+- ![erd](https://user-images.githubusercontent.com/62214428/98022992-aaaf6780-1e49-11eb-9ebf-733222f4855c.jpg)
 
 ## 서비스 미리보기
 - ![ezgif com-gif-maker](https://user-images.githubusercontent.com/62214428/97904717-3ced3800-1d84-11eb-8576-148625c0477a.gif)
