@@ -82,6 +82,10 @@ public class AccountService implements UserDetailsService {
     }
 
     //로그인 과정
+    /**  ★ 순서정리
+     *    처음에 로그인을 한다면 UserAccount(account) 가 안증된 principal객체가된다
+     * -> 로그인하고 리다이렉트로 / 로 돌아가는데  mainController에서 public String home(@CurrentUser Account account, Model model)
+     * -> 여기서 @CurrentUser로 account가 principal객체인지 판단*/
     public void login(Account account) {
 
         //이렇게 하는 이유는 패스워드를 인코딩했기 때문
@@ -125,7 +129,7 @@ public class AccountService implements UserDetailsService {
         //여기까지 왔다는 것은 해당햐는 이메일, 닉네임으로 찾은 계정이 이미 회원가입 되어있다는 것.
         //그러면 돌려줄 때 principle에 해당하는 객체를 돌려주면된다
         return new UserAccount(account);
-        /**  여기서도 로그인을 하면 새로운 principal인 UserAccount 넘겨준다*/
+        /**  여기서도 로그인을 하면 이미 db에 있는 정보를 갖고 principal인 UserAccount 넘겨준다*/
     }
 
     public void completeSignUp(Account account) {
