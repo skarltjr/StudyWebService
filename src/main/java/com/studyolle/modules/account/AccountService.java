@@ -129,7 +129,8 @@ public class AccountService implements UserDetailsService {
         //여기까지 왔다는 것은 해당햐는 이메일, 닉네임으로 찾은 계정이 이미 회원가입 되어있다는 것.
         //그러면 돌려줄 때 principle에 해당하는 객체를 돌려주면된다
         return new UserAccount(account);
-        /**  여기서도 로그인을 하면 이미 db에 있는 정보를 갖고 principal인 UserAccount 넘겨준다*/
+        /**  여기서도 로그인을 하면 이미 db에 있는 정보를 갖고 principal인 UserAccount 넘겨준다
+         * UserAccount는 시큐리티가 제공하는 User를 extend한거다*/
     }
 
     public void completeSignUp(Account account) {
