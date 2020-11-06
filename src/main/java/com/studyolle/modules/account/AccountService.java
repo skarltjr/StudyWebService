@@ -101,6 +101,8 @@ public class AccountService implements UserDetailsService {
 
         // ! 이 토큰을 SecurityContextHolder에서 setAuthentication하는게 로그인 상태유지
         SecurityContextHolder.getContext().setAuthentication(token);
+
+        /**  setAuthentication 이 토큰을 인증된 상태로 만들겠다. 근데 이 토큰에서 첫번쨰파라미터인 UserAccount를 principal로 하겠다고 설정*/
     }   
 
 
