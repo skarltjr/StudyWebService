@@ -98,6 +98,7 @@ public class AccountController {
 
         //로그인처리
         accountService.login(account);
+        /**  -> 그냥 로그인은 시큐리티에게 맡기지만 -> accountservice의 loadUserByUsername */
         return "redirect:/";
     }
 

@@ -88,8 +88,8 @@ public class AccountService implements UserDetailsService {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                 //account.getNickname(), 대신
                 new UserAccount(account), //로그인을 했다면 인증된 principle
-                //사실 첫번째로 넘겨준 파라미터가 principle  / 이 principle에 닉네임이 아니라 어카운트 자체를 넣어서
-                //사용하고 싶어서 UserAccount를 만들었다 그럼 첫번째 파라미터인 UserAccount가 principle이고
+                //사실 첫번째로 넘겨준 파라미터가 principal  / 이 principal에 닉네임이 아니라 어카운트 자체를 넣어서
+                //사용하고 싶어서 UserAccount를 만들었다 그럼 첫번째 파라미터인 UserAccount가 principal이고
                 //CurrentUser에서도 UserAccount에 넣어준 account 이걸 참조
                 //그래서 로그인하지 않은 사람과 로그인 한 사람을 구분하도록
                 /**    @CurrentUser Account account 에서 로그인 한 사람이면 account정보를 가져와서 사용하고
@@ -120,6 +120,7 @@ public class AccountService implements UserDetailsService {
         //여기까지 왔다는 것은 해당햐는 이메일, 닉네임으로 찾은 계정이 이미 회원가입 되어있다는 것.
         //그러면 돌려줄 때 principle에 해당하는 객체를 돌려주면된다
         return new UserAccount(account);
+        /**  여기서도 로그인을 하면 새로운 principal인 UserAccount 넘겨준다*/
     }
 
     public void completeSignUp(Account account) {
