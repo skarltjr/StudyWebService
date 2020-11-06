@@ -13,7 +13,7 @@ public class UserAccount extends User {
      *  즉 시큐리티가 다루는 유저정보와  도메인에서 다루는 유저정보사이 갭을 메꾸기 위해*/
 
     private Account account;  //도메인에서의 어카운트
-
+    // 이 account이름이랑 CurrentUser의  null : account") 에서 account랑 이름은 맞춰줘야한다 UserAccount에서 꺼낼거니까
     //파라미터로 도메인의 어카운트
     public UserAccount(Account account) {
         super(account.getNickname(), account.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));

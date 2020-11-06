@@ -84,12 +84,20 @@ public class AccountService implements UserDetailsService {
     //로그인 과정
     public void login(Account account) {
 
+        //이렇게 하는 이유는 패스워드를 인코딩했기 때문
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                 //account.getNickname(), 대신
                 new UserAccount(account), //로그인을 했다면 인증된 principle
+                //사실 첫번째로 넘겨준 파라미터가 principle  / 이 principle에 닉네임이 아니라 어카운트 자체를 넣어서
+                //사용하고 싶어서 UserAccount를 만들었다 그럼 첫번째 파라미터인 UserAccount가 principle이고
+                //CurrentUser에서도 UserAccount에 넣어준 account 이걸 참조
+                //그래서 로그인하지 않은 사람과 로그인 한 사람을 구분하도록
+                /**    @CurrentUser Account account 에서 로그인 한 사람이면 account정보를 가져와서 사용하고
+                 * 아니면 anonymousUser  --> CurrentUser에 설정*/
                 account.getPassword(),
                 List.of(new SimpleGrantedAuthority("ROLE USER")));
 
+        // ! 이 토큰을 SecurityContextHolder에서 setAuthentication하는게 로그인 상태유지
         SecurityContextHolder.getContext().setAuthentication(token);
     }   
 

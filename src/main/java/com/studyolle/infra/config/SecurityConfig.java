@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/", "/login", "/sign-up", "/check-email-token",
                         "/email-login", "/login-by-email", "/search/study").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated(); //나머지는 로그인해야 사용할 수 있다
         /** 이 내용들은 그냥 접근 허용하겠다  / 프로필은 get만 바로접근 가능하도록 나머지는 다 로그인해야한다 */
 
         http.formLogin()    //로그인은 스프링 시큐리티에게 맡긴다.
@@ -56,11 +56,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) throws Exception {  //이건 WebSecurity다 !!
         web.ignoring()
                 .mvcMatchers("/node_modules/**")// 앞서 노드-모듈은 위 시큐리티 안걸러지도록 설정한
                 //부분에 포함되어있지 않다 그래서 당연히 걸러지는데  여기서 이그노어 추가해줘서 그냥 넘어가도록
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+        //즉 static resource들은 시큐리티 필터 적용안하도록
     }
     /** static 에 있는 이미지들이 시큐리티에 걸려서 깨짐. 시큐리티 안거쳐도 된다고 설정 */
 }
