@@ -56,7 +56,7 @@ public class SettingsController {
     /**
      * ModelAttribute 는 입력시 생기는 에러를 항상 같이 받아주기 위해 Errors를 달고 다니자
      */
-    @PostMapping("/settings/profile")
+    @PostMapping("/settings/profile")  //Valid로 조건에 맞는지 검사하고
     public String updateProfile(@CurrentUser Account account, @Valid Profile profile,
                                 Errors errors, Model model, RedirectAttributes attributes) {
         /**  ★★ 여기서 account는 준영속상태 즉 detached  = 영속상태가 아니다! 그러나 한 번 이미 디비에는

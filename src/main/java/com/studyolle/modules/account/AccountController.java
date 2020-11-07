@@ -159,9 +159,9 @@ public class AccountController {
          * 즉 nickname에 해당하는 account와 파라미터로 받은 account 가 일치하면 주인 아니면 다른 사람*/
         Account accountToView = accountService.getAccount(nickname);
 
-        //model.addAttribute("account",byNickname);
+        //model.addAttribute("account",accountToView);
         model.addAttribute(accountToView); //위랑 똑같다
-        model.addAttribute("isOwner", accountToView.equals(account));
+        model.addAttribute("isOwner", accountToView.equals(account)); // 둘이 같은지 체크 같으면 owner
         return "account/profile";
 
     }
