@@ -82,7 +82,7 @@ public class AccountService implements UserDetailsService {
     }
 
     //로그인 과정
-    /** ★ 목표 = 컨트롤러에서   @CurrentUser Account account처럼 account 객체를 받기 위해
+    /** ★ 목표 = 컨트롤러에서   @CurrentUser Account account처럼 account 객체를 받기
      *    스프링 시큐리티에서는 로그인 하면 org.springframework.security.core.userdetails.User 클래스로 리턴   /UserAccount extends User
      *    그리고 UserDetailService를 이용해 사용자 정보를 읽어낸다. ( loadUserByUsername )  / AccountService implements UserDetailsService
      * */
@@ -94,9 +94,11 @@ public class AccountService implements UserDetailsService {
      *     UserAccount가 account를 갖도록 만든다.
      *     @CurrentUser Account account 가 사용될 때 @CurrentUser는 @AuthenticationPrincipal(~)을 갖고 있는데 principal을  account로 설정했으니
      *     @AuthenticationPrincipal AccountAdapter accountAdapter 원래 이렇게 사용하던것을 간편하게
+     *     ★  @CurrentUser Account account 처럼 account로 바로 사용할 수 있는 이유는 (expression = "#this == 'anonymousUser' ? null : account")
+     *     UserAccount 의 private account와 이름을 맞춰놓았기 때문
      *
      *         @GetMapping
-     *     public ResponseEntity getAccount(@AuthenticationPrincipal AccountAdapter accountAdapter) {
+     *     public ResponseEntity getAccount(@AuthenticationPrincipal AccountAdapter accountAdapter) { AccountAdapter= UserAccount
      *         Account account = accountAdapter.getAccount();
      *          return ResponseEntity.ok(account);
      *    ->
@@ -114,6 +116,8 @@ public class AccountService implements UserDetailsService {
      *  컨트롤러에서 로그인된 유저인지 판단하기 위해 @AuthenticationPrincipal UserAccount userAccount 를 편리하게 쓰기 위해
      *  CurrentUser어노테이션을 추가
      * */
+
+
     public void login(Account account) {
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
@@ -124,7 +128,7 @@ public class AccountService implements UserDetailsService {
 
         // ! 이 토큰을 SecurityContextHolder에서 setAuthentication하는게 로그인 상태유지
         SecurityContextHolder.getContext().setAuthentication(token);
-    }   
+    }
 
 
     /** 로그인 처리 핸들러는 만들지 않아도 되지만(시큐리티가 처리) UserDetailsService을 impl하여 loadUserByUsername 처리해야한다*/
