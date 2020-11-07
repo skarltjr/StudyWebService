@@ -136,11 +136,11 @@ public class AccountController {
     public String checkEmail(@CurrentUser Account account, Model model) {
         model.addAttribute("email", account.getEmail());
         return "account/check-email";
-        /** 이메일 인증을 하기 위해 먼저 가입된(= service의 로그인에서 userAccount로 + @CurrentUser로 principle인)
+        /** 이메일 인증을 하기 위해 먼저 가입된(= service의 로그인에서 userAccount로 + @CurrentUser로 principal)
          *      계정에만 보여야하니까 */
     }
 
-    @GetMapping("resend-confirm-email")
+    @GetMapping("/resend-confirm-email")
     public String resendConfirmEmail(@CurrentUser Account account, Model model) {
         if (!account.canSendConfirmEmail()) {
             model.addAttribute("error", "인증 이메일은 1시간에 한 번만 전송할 수 있습니다");

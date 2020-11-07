@@ -40,8 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         /**  해커가 쿠키가져다 계정탈취하는 걸 최대한 안정하게 보호*/
         http.rememberMe()
-                .userDetailsService(userDetailsService)
+                .userDetailsService(userDetailsService) //db에서 인증된 정보 꺼내오기 위한 구현체 / Accountservice에서 impl
                 .tokenRepository(tokenRepository());
+        // application-dev에서 timeout을 여유있게 늘려줬지만 이 시간이 지나면 끝. 그렇다고 이 시간을 무작정늘리는건 비효율
+        // 그걸 위해 리멤버 쿠키를 하나 더 만들어서 정보를 담고있는다.
+        // 그런데 쿠키는 탈취당할 수 있고 탈취는 곧 내 계정이 털린거랑 똑같으니까
+        // 그래서 매번 변하는 토큰과 고정 토큰 두개를 이용.
     }
 
     @Bean
@@ -52,8 +56,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // private final DataSource dataSource; 가져다 쓰기만하면된다
         return jdbcTokenRepository;
 
-        //JdbcTokenRepositoryImpl 에 맞는 테이블생성을 위해 엔티티 추가 -> PersistentLogins
+
+        /**JdbcTokenRepositoryImpl 에 맞는 테이블생성을 위해 엔티티 추가 -> PersistentLogins*/
     }
+
 
     @Override
     public void configure(WebSecurity web) throws Exception {  //이건 WebSecurity다 !!
