@@ -97,6 +97,7 @@ public class AccountService implements UserDetailsService {
      *     ★  @CurrentUser Account account 처럼 account로 바로 사용할 수 있는 이유는 (expression = "#this == 'anonymousUser' ? null : account")
      *     UserAccount 의 private account와 이름을 맞춰놓았기 때문
      *
+     *      원래는
      *         @GetMapping
      *     public ResponseEntity getAccount(@AuthenticationPrincipal AccountAdapter accountAdapter) { AccountAdapter= UserAccount
      *         Account account = accountAdapter.getAccount();
@@ -107,7 +108,7 @@ public class AccountService implements UserDetailsService {
      *         return ResponseEntity.ok(account);
      *
      *      시큐리티가 처리하는 로그인 과정에서 사용자 정보를 읽어오는 UserDetailsService의 loadUserByUsername가 return new UserAccount(account)하는것은
-     *      @AuthenticationPrincipal를 사용하면 UserDetailsService에서 return한 객체를 파라미터로 직접 받아 사용할 수 있다.
+     *      ★ @AuthenticationPrincipal를 사용하면 UserDetailsService에서 return한 객체를 파라미터로 직접 받아 사용할 수 있다.
      * */
 
     /** 정리하면 로그인 과정에서 token을 인증된상태로 남길 때 token의 첫번째파라미터가 principal인데
@@ -145,7 +146,7 @@ public class AccountService implements UserDetailsService {
             throw new UsernameNotFoundException(emailOrNickname); //emailOrNickname에 해당하는 유저없음을 던지고
         }
 
-        return new UserAccount(account);
+        return new UserAccount(account); //principal 객체로 리턴해주기
     }
 
     public void completeSignUp(Account account) {
