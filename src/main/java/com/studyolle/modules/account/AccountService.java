@@ -82,37 +82,52 @@ public class AccountService implements UserDetailsService {
     }
 
     //로그인 과정
-    /**  ★ 순서정리
-     *    처음에 로그인을 한다면 UserAccount(account) 가 안증된 principal객체가된다
-     * -> 로그인하고 리다이렉트로 / 로 돌아가는데  mainController에서 public String home(@CurrentUser Account account, Model model)
-     * -> 여기서 @CurrentUser로 account가 principal객체인지 판단*/
+    /** ★ 목표 = 컨트롤러에서   @CurrentUser Account account처럼 account 객체를 받기 위해
+     *    스프링 시큐리티에서는 로그인 하면 org.springframework.security.core.userdetails.User 클래스로 리턴   /UserAccount extends User
+     *    그리고 UserDetailService를 이용해 사용자 정보를 읽어낸다. ( loadUserByUsername )  / AccountService implements UserDetailsService
+     * */
+
+    /**   인증정보를 사용하기 위한 객체가 Authentication.  -> setAuthentication(token)
+     *     즉 token이  인증된 정보를 가진 Authentication객체이고 , Authentication객체의 첫번째 파라미터로 들어온 UserAccount(account)가 principal 이다.
+     *     principal객체는 최상위 인터페이스 -> 원래 nickName or id만 꺼낼 수 있는데  단순히 로그인의 여부를 넘어 로직에서 로그인된 account자체. 모든 필드를 사용하고싶어서
+     *     account의 전체필드를 사용할 수 있도록 하기 위해서 User클래스를 상속받은 UserAccount를 만들고
+     *     UserAccount가 account를 갖도록 만든다.
+     *     @CurrentUser Account account 가 사용될 때 @CurrentUser는 @AuthenticationPrincipal(~)을 갖고 있는데 principal을  account로 설정했으니
+     *     @AuthenticationPrincipal AccountAdapter accountAdapter 원래 이렇게 사용하던것을 간편하게
+     *
+     *         @GetMapping
+     *     public ResponseEntity getAccount(@AuthenticationPrincipal AccountAdapter accountAdapter) {
+     *         Account account = accountAdapter.getAccount();
+     *          return ResponseEntity.ok(account);
+     *    ->
+     *     @GetMapping
+     *     public ResponseEntity getAccount(@CurrentUser Account account) {
+     *         return ResponseEntity.ok(account);
+     *
+     *      시큐리티가 처리하는 로그인 과정에서 사용자 정보를 읽어오는 UserDetailsService의 loadUserByUsername가 return new UserAccount(account)하는것은
+     *      @AuthenticationPrincipal를 사용하면 UserDetailsService에서 return한 객체를 파라미터로 직접 받아 사용할 수 있다.
+     * */
+
+    /** 정리하면 로그인 과정에서 token을 인증된상태로 남길 때 token의 첫번째파라미터가 principal인데
+     *  account자체를 principal로 만들어 account의 모든 필드를 사용할 수 있도록 adapter로 User를 상속받은 UserAccount를 만든다 UserAccount는 account를 갖는다
+     *  시큐리티 로그인 처리과정을 위해 UserDetailsService의 loadUserByUsername에서 db에서 꺼내온 account를  return new UserAccount(account);
+     *  컨트롤러에서 로그인된 유저인지 판단하기 위해 @AuthenticationPrincipal UserAccount userAccount 를 편리하게 쓰기 위해
+     *  CurrentUser어노테이션을 추가
+     * */
     public void login(Account account) {
 
-        //이렇게 하는 이유는 패스워드를 인코딩했기 때문
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                 //account.getNickname(), 대신
-                new UserAccount(account), //로그인을 했다면 인증된 principal
-                //사실 첫번째로 넘겨준 파라미터가 principal  / 이 principal에 닉네임이 아니라 어카운트 자체를
-                //사용하고 싶어서 UserAccount를 만들었다 그럼 첫번째 파라미터인 UserAccount가 principal이고
-                //CurrentUser에서도 UserAccount에 넣어준 account 이걸 참조
-                //그래서 로그인하지 않은 사람과 로그인 한 사람을 구분하도록
-
-                /** 중요한 것은 UserAccount가 principal 그리고 account가 안에 담겨있고*/
-                /**    @CurrentUser Account account 에서 로그인 한 사람이면 account정보를 가져와서 사용하고 , account가 pricipal인 UserAccount에 담긴 account면
-                 * 아니면 anonymousUser  --> CurrentUser에 설정*/
+                new UserAccount(account),
                 account.getPassword(),
                 List.of(new SimpleGrantedAuthority("ROLE USER")));
 
         // ! 이 토큰을 SecurityContextHolder에서 setAuthentication하는게 로그인 상태유지
         SecurityContextHolder.getContext().setAuthentication(token);
-
-        /**  setAuthentication 이 토큰을 인증된 상태로 만들겠다. 근데 이 토큰에서 첫번쨰파라미터인 UserAccount를 principal로 하겠다고 설정*/
     }   
 
 
-    // 시큐리티덕분에 로그인 핸들러는 만들지 않아도 되지만 로그인처리는 디비에 저장된 자료를 바탕으로 처리해야하니까
-    // 중간다리를 만들어야한다
-    /** 즉 로그인 처리 핸들러는 만들지 않아도 되지만(시큐리티가 처리) UserDetailsService을 impl하여 loadUserByUsername 처리해야한다*/
+    /** 로그인 처리 핸들러는 만들지 않아도 되지만(시큐리티가 처리) UserDetailsService을 impl하여 loadUserByUsername 처리해야한다*/
     @Transactional(readOnly = true) //로그인할 때 데이터만 읽어오는거니까
     @Override
     public UserDetails loadUserByUsername(String emailOrNickname) throws UsernameNotFoundException {
@@ -126,11 +141,7 @@ public class AccountService implements UserDetailsService {
             throw new UsernameNotFoundException(emailOrNickname); //emailOrNickname에 해당하는 유저없음을 던지고
         }
 
-        //여기까지 왔다는 것은 해당햐는 이메일, 닉네임으로 찾은 계정이 이미 회원가입 되어있다는 것.
-        //그러면 돌려줄 때 principle에 해당하는 객체를 돌려주면된다
         return new UserAccount(account);
-        /**  여기서도 로그인을 하면 이미 db에 있는 정보를 갖고 principal인 UserAccount 넘겨준다
-         * UserAccount는 시큐리티가 제공하는 User를 extend한거다*/
     }
 
     public void completeSignUp(Account account) {
