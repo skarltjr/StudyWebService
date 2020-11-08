@@ -154,6 +154,8 @@ public class SettingsController {
         return "settings/tags";
     }
 
+    /** @ModelAttribute와 ResponseBody의 차이는 ModelAttribute는 여러 필드를 가진. 여러 파라미터를 한 번에 받기위해
+     * ResponseBody본문 자체  = body {} 에 직접 바인딩*/
     @PostMapping("/settings/tags/add")
     @ResponseBody //ajax 요청이기때문에 아래와 같이 평소와 다름
     public ResponseEntity addTag(@CurrentUser Account account, @RequestBody TagForm tagForm) {
@@ -163,7 +165,7 @@ public class SettingsController {
             tag = tagRepository.save(Tag.builder().title(tagForm.getTagTitle()).build());
             //save(new Tag(tageForm.gettitle)) 이랑 똑같은데 빌더어노테이션 사용
         }
-        // 태그가 존재하면
+        // 태그가 존재하면  단 . 당연히 지금 account도 detached니까 서비스단에서 디비에 접근해서 account꺼내온 후
         accountService.addTag(account, tag);
         return ResponseEntity.ok().build();
     }

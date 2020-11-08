@@ -234,7 +234,7 @@ public class AccountService implements UserDetailsService {
     }
 
     public Set<Tag> getTags(Account account) {
-        Optional<Account> byId = accountRepository.findById(account.getId());
+        Optional<Account> byId = accountRepository.findById(account.getId()); //detached니까 다시 영속성으로
         return byId.orElseThrow().getTags(); //없으면 에러던지고 있으면 가져오고
     }
 
