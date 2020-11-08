@@ -68,7 +68,7 @@ public class Account {
 
     private boolean studyUpdatedByWeb=true;
 
-    @ManyToMany
+    @ManyToMany  /**    추가정보가 들어갈 수 있는 실무에서는 1:다 다:1로 풀어나가야한다. */
     private Set<Tag> tags = new HashSet<>();  //list 나 set
     @ManyToMany
     private Set<Zone> zones = new HashSet<>();
