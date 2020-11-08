@@ -157,10 +157,8 @@ public class AccountService implements UserDetailsService {
     }
 
     public void updateProfile(Account account, Profile profile) {
-        //반면 여기서는 컨트롤러에서 디비에 접근안했고 여기서 바로 update하면 당연히 영속상태가 아니라 업데이트 안되는거고
-        //그러니까 디비에서 꺼내와서 변경감지로 업데이트처리
-        // jpa에서는 당연히 업데이트할 때 변경감지로 그럴려면 당연히 db에서 가져와야지 일단
-        //근데 여기선 merge
+        /**  account는 ? detached상태  그러니까 영속성컨텍스트에 없다. 그러면 변경감지는 불가능 
+         *  따라서 save를 해줘서 merge로 다시 저장한다*/
         //편리함을 위해 모델매퍼 추가
         modelMapper.map(profile, account);
         /*
@@ -203,7 +201,7 @@ public class AccountService implements UserDetailsService {
         account.setNickname(nickname);
         accountRepository.save(account);
         login(account);
-        //새로 인증을 했다는 느낌
+        //새로 인증
     }
 
     public void sendLoginLink(Account account) {

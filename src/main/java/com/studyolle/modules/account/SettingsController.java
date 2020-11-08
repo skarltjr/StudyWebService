@@ -55,9 +55,10 @@ public class SettingsController {
 
     /**
      * ModelAttribute 는 입력시 생기는 에러를 항상 같이 받아주기 위해 Errors를 달고 다니자
+     * 프로필은 자기소개 이미지 등을 변경하니까 레퍼지토리에서 중복검사를 할 필요가없으니 validator 따로 필요없다
      */
     @PostMapping("/settings/profile")  //Valid로 조건에 맞는지 검사하고
-    public String updateProfile(@CurrentUser Account account, @Valid Profile profile,
+    public String updateProfile(@CurrentUser Account account, @Valid Profile profile, //원래는 @ModelAttribute도 붙여줘야한다생략가능
                                 Errors errors, Model model, RedirectAttributes attributes) {
         /**  ★★ 여기서 account는 준영속상태 즉 detached  = 영속상태가 아니다! 그러나 한 번 이미 디비에는
          * 들어갔다 나온애 그래서 id값은 있다. 결국 아무리 이걸갖고 변경해봤자 변경감지가 불가능 jpa가 관리하는 놈이 아니니까~*/
@@ -68,7 +69,7 @@ public class SettingsController {
             return "settings/profile";
         }
         //데이터를 수정하는 것은 트랜잭션을 가진 서비스에게 위임하자 !
-        accountService.updateProfile(account, profile);
+        accountService.updateProfile(account, profile);  // 여기서 account는 ? detached
         attributes.addFlashAttribute("message", "프로필을 수정했습니다.");// 한 번쓰고 버려질 데이터 .그래서 flash
         return "redirect:" + "/settings/profile";
     }

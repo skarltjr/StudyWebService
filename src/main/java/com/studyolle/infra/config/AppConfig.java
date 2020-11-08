@@ -24,6 +24,10 @@ public class AppConfig {
         modelMapper.getConfiguration()
                 .setDestinationNameTokenizer(NameTokenizers.UNDERSCORE)
                 .setSourceNameTokenizer(NameTokenizers.UNDERSCORE);
+        //UNDERSCORE -> ex) studyEnrollResultByEmail랑 매핑을 해야하는데 Email이랑 매핑하는경우 등 잘
+        // 못알아 먹을 수 있다. 그래서 무엇으로 구분할지 정해준다
+        //CamelCase로 설정해뒀으니  언더스코어로 구분해라라고 지정해주면
+        //언더스코어가 없으면 하나 즉 studyEnrollResultByEmail은 한 놈
         return modelMapper;
     }
 }
