@@ -154,8 +154,9 @@ public class SettingsController {
         return "settings/tags";
     }
 
-    /** @ModelAttribute와 ResponseBody의 차이는 ModelAttribute는 여러 필드를 가진. 여러 파라미터를 한 번에 받기위해
-     * ResponseBody본문 자체  = body {} 에 직접 바인딩*/
+    /** @ModelAttribute와 ResponseBody의 차이는 ModelAttribute는 여러 필드를 가진. 여러 파라미터를 한 번에 받기위해(여러 @RequestParam 한번에)
+     * ResponseBody본문 자체  = body {} 에 직접 바인딩
+     * -> JSON기반 메세지처리 */
     @PostMapping("/settings/tags/add")
     @ResponseBody //ajax 요청이기때문에 아래와 같이 평소와 다름
     public ResponseEntity addTag(@CurrentUser Account account, @RequestBody TagForm tagForm) {
