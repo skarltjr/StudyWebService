@@ -54,6 +54,7 @@ public class StudyController {
             return "study/form";
         }
         Study newStudy = studyService.createNewStudy(modelMapper.map(studyForm, Study.class), account);
+        // 스터디URL에 한글도 가능하도록 했기 때문에 encode도 해줘야한다
         return "redirect:/study/" + URLEncoder.encode(newStudy.getPath(), StandardCharsets.UTF_8);
     }
 
