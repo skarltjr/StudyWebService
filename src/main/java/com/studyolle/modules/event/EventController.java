@@ -35,8 +35,7 @@ public class EventController {
     public void initBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(eventValidator);
     }
-
-
+    
     @GetMapping("/new-event")
     public String newEventForm(@CurrentUser Account account, @PathVariable String path, Model model) {
         Study study = studyService.getStudyToUpdateStatus(account, path);
@@ -69,12 +68,14 @@ public class EventController {
         return "event/view";
     }
 
+
     @GetMapping("/events")
     public String viewStudyEvents(@CurrentUser Account account, @PathVariable String path, Model model) {
         Study study = studyService.getStudy(path);
         model.addAttribute(account);
         model.addAttribute(study);
 
+        /**  event - enrollment 양방향매핑 -> 한방에 가져오기 인지*/
         List<Event> events = eventRepository.findByStudyOrderByStartDateTime(study);
         List<Event> newEvents = new ArrayList<>();
         List<Event> oldEvents = new ArrayList<>();
@@ -107,6 +108,7 @@ public class EventController {
         return "event/update-form";
     }
 
+
     @PostMapping("/events/{id}/edit")
     public String updateEventSubmit(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id,
                                     @Valid EventForm eventForm, Errors errors, Model model) {
@@ -127,7 +129,6 @@ public class EventController {
         eventService.updateEvent(event, eventForm);
         return "redirect:/study/" + study.getEncodedPath() + "/events/" + event.getId();
     }
-
 
 /*    @PostMapping("/events/{id}/delete")
     public String cancelEvent(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id) {
