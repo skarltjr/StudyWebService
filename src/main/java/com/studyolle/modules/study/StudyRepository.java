@@ -19,6 +19,7 @@ public interface StudyRepository extends JpaRepository<Study,Long>, StudyReposit
     //그래서 studu에서 엔티티그래프로 구성해둔 것들은
     // value = "Study.withAll",type = EntityGraph.EntityGraphType.LOAD  -> eager로 바로 가져오게
 
+    /** fetch는 엔티티그래프로 설정한 노드들은 eager 나머지는 모두 lazy로 하겠다고 설정*/
     @EntityGraph(value = "Study.withTagsAndManagers",type = EntityGraph.EntityGraphType.FETCH)
     Study findStudyWithTagsByPath(String path);
     // WithTags는 data jpa한테 무의미한 이름내용이라 무시 -> findStudyByPath로  그러나 오버로딩으로 엔티티그래프 다르게

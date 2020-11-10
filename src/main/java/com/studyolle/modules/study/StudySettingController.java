@@ -136,8 +136,10 @@ public class StudySettingController {
         return ResponseEntity.ok().build();
     }
 
+
     @GetMapping("/zones")
     public String studyZonesForm(@CurrentUser Account account, @PathVariable String path, Model model) throws JsonProcessingException {
+
         Study study = studyService.getStudyToUpdateZone(account, path);
         model.addAttribute(account);
         model.addAttribute(study);
@@ -148,6 +150,7 @@ public class StudySettingController {
         model.addAttribute("whitelist", objectMapper.writeValueAsString(allZones));
         return "study/settings/zones";
     }
+
 
     @PostMapping("/zones/add")
     @ResponseBody
