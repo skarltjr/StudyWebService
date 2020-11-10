@@ -241,6 +241,7 @@ public class StudySettingController {
         return "redirect:/study/" + study.getEncodedPath() + "/settings/study";
     }
 
+    //단일 파라미터는 RequestParam으로 충분
     @PostMapping("/study/title")
     public String updateStudyTitle(@CurrentUser Account account, @PathVariable String path, @RequestParam String newTitle,
                                    Model model, RedirectAttributes attributes) {
