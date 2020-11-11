@@ -51,6 +51,7 @@ public class Event {  //모임 엔티티
     private Integer limitOfEnrollments; //갑이 null일수도있으니
 
     @OneToMany(mappedBy = "event")
+    @OrderBy("enrolledAt") // 누군가 취소했을 때 대기자중 가장 먼저 신청한 사람 끌어오기위해 미리 시간순으로 정렬해두기
     private List<Enrollment> enrollments = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
