@@ -62,7 +62,6 @@ public class EventService {
             enrollmentRepository.save(enrollment);
         }
     }
-
     public void cancelEnrollment(Event event, Account account) {
         Enrollment enrollment = enrollmentRepository.findByEventAndAccount(event, account);
         if (!enrollment.isAttend()) {
