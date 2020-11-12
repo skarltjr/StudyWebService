@@ -39,6 +39,7 @@ public class StudyEventListener {
     private final AppProperties appProperties;
     private final NotificationRepository notificationRepository;
 
+    /** 스터디에 대한 이벤트를 처리하기위한 스터디이벤트리스너*/
     @EventListener
     public void handleStudyCreatedEvent(StudyCreatedEvent studyCreatedEvent) {
         // studyCreatedEvent.getStudy() 이렇게 가져온 스터디는 준영속. 태그,존 등을 참조할 수 없다
@@ -93,6 +94,7 @@ public class StudyEventListener {
         emailService.sendEmail(emailMessage);
     }
 
+
     // 스터디 업데이트 처리 리스너
     @EventListener
     public void handleStudyUpdateEvent(StudyUpdateEvent studyUpdateEvent) {
@@ -110,4 +112,5 @@ public class StudyEventListener {
             }
         }
     }
+
 }

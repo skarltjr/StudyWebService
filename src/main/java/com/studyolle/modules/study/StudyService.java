@@ -63,6 +63,9 @@ public class StudyService {
         modelMapper.map(studyDescriptionForm, study);
         //여기서는 스터디가 영속상태라서 merge 안해도된다 당연히
         eventPublisher.publishEvent(new StudyUpdateEvent(study,"스터디 소개를 수정했습니다"));
+
+        /**  만약 async로 쓰레드 분리를 안해줬다면 eventPublisher에서  runtime에러가 났을 때 스터디가 생성이 안된다
+         * 즉  스터디에 대한 로직에 영향을 끼친다*/
     }
 
     /**

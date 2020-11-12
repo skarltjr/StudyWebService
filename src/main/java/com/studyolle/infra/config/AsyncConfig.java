@@ -12,6 +12,10 @@ import java.util.concurrent.Executor;
 @Configuration
 @EnableAsync
 public class AsyncConfig implements AsyncConfigurer {
+    /**  기본적으로 기존 로직에 영향을 주는 걸 피하기 위해 .
+     * 같은 쓰레드 안에서 처리가 되는걸 피하기 위해
+     * 기본 Executor는 효율적이지 못해서 Executor를 새로 */
+
     @Override
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
