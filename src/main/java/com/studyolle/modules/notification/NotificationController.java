@@ -19,6 +19,8 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
+
+
     @GetMapping("/notifications")
     public String getNotifications(@CurrentUser Account account, Model model) {
         List<Notification> notifications = repository.findByAccountAndCheckedOrderByCreatedLocalDateTimeDesc(account, false);
@@ -56,6 +58,7 @@ public class NotificationController {
         model.addAttribute("eventEnrollmentNotifications", eventEnrollmentNotifications);
         model.addAttribute("watchingStudyNotifications", watchingStudyNotifications);
     }
+
 
     @GetMapping("/notifications/old")//읽은 알림
     public String getOldNotifications(@CurrentUser Account account, Model model) {

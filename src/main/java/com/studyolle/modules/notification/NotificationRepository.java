@@ -10,7 +10,7 @@ import java.util.List;
 public interface NotificationRepository extends JpaRepository<Notification,Long> {
     long countByAccountAndChecked(Account account, boolean checked);
 
-    @Transactional
+    @Transactional /**   왜냐? 이 읽지 않은 알림들을 읽으면 읽음으로 전부 바꿔줄거기 때문에 트랜잭션*/
     List<Notification> findByAccountAndCheckedOrderByCreatedLocalDateTimeDesc(Account account, boolean checked);
 
     @Transactional
