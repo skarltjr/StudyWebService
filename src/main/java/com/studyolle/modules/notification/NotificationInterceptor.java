@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** 모든 요청(홈으로 가거나 다른 스터디로 가거나 했을 때를 포함해서)에서 알림이 오면 알림아이콘 색이 변하도록 설정하고싶다
+/** 한 사용자가 모든 요청(홈으로 가거나 다른 스터디로 가거나 했을 때를 포함해서)에서 읽지않은 알림이 있으면 알림아이콘 색이 변하도록 설정하고싶다
  * 그럼 모든 요청에 대해 이벤트는 처리하고 ★뷰를 렌더링 하기 전에 postHandle
  * 알림이 생성되었다는 것 자체가 예를들어 내가 관심있는 지역에 대한 스터디가 만들어지고 studyCreatedEvent가 핸들러로
  * 처리가 되었다는 뜻 그러니 post
@@ -28,8 +28,7 @@ public class NotificationInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         //일단 인증된 계정에서만 작동해야하니까
 
-
-         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (modelAndView != null && !isRedirectView(modelAndView) && authentication != null &&
                 authentication.getPrincipal() instanceof UserAccount) {
     /** model을 안쓰는 경우나 리다이렉트하는 경우나 인증이 안된경우나 .인증이 된 객체가 UserAccount타입이 아닌 경우에는 해당 x*/

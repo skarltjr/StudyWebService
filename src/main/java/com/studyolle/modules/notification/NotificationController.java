@@ -20,7 +20,6 @@ public class NotificationController {
     private final NotificationService notificationService;
 
 
-
     @GetMapping("/notifications")
     public String getNotifications(@CurrentUser Account account, Model model) {
         List<Notification> notifications = repository.findByAccountAndCheckedOrderByCreatedLocalDateTimeDesc(account, false);
