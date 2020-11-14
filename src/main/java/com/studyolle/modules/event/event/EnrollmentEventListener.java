@@ -33,6 +33,8 @@ public class EnrollmentEventListener {
     private final TemplateEngine templateEngine;
     private final EmailService emailService;
 
+    /**  event controller단에서 이미 디비에서 찾아온것이니 당연히 영속상태 그래서 enrollmentEvent에서
+     * 바로 빼와서 사용가능 */
     @EventListener
     public void handleEnrollmentEvent(EnrollmentEvent enrollmentEvent) {
         //enrollment는 따로 최적화 할 필요없으니 그대로 빼서사용해도된다
