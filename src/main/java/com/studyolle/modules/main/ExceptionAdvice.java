@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ExceptionAdvice {
 
+    /** 런타임동안 누가 어떤 요청으로 에러를 발생시킨건지 로그 남기기*/
     @ExceptionHandler
     public String handleRuntimeException(@CurrentUser Account account, HttpServletRequest req, RuntimeException e) {
         if (account != null) {
