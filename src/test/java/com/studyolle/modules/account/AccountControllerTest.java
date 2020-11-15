@@ -92,6 +92,7 @@ class AccountControllerTest {
     void signUpSubmit_with_wrong_input() throws Exception {
         mockMvc.perform(post("/sign-up")
                 .param("nickname", "kiseok")
+
                 .param("email", "email..")   //이메일 양식오류
                 .param("password", "12345")  //5글자면 글자수부족오류
                 .with(csrf()))  //form을 보내는 =  post 테스트는 csrf넣어줘야한다
