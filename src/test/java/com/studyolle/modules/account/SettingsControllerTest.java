@@ -131,9 +131,7 @@ class SettingsControllerTest {
                 .with(csrf()))
                 .andExpect(status().isOk());
 
-        Tag newTag = tagRepository.
-
-                findByTitle("newTag");
+        Tag newTag = tagRepository.findByTitle("newTag");
         assertNotNull(newTag);
         /** 아래 account는 어떤 상태? = detached 그래서 test에 transactional추가 \
          *   session이 없다 -> 하나의 transactional에서 동작해야한다 */
