@@ -14,6 +14,7 @@
 ## Task
 - mailsender 오류 1 
 - 테스트 코드 보충 2
+- ERD사진 교체
 
 
 
