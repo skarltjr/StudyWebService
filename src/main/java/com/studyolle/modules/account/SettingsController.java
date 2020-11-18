@@ -48,8 +48,7 @@ public class SettingsController {
     @GetMapping("/settings/profile") // 굳이 여기서 {}처럼 개인정보를 안받아도
     public String updateProfileForm(@CurrentUser Account account, Model model) {
         model.addAttribute(account);
-        model.addAttribute(modelMapper.map(account, Profile.class)); //이거 그냥 dto만들어서 넣어주는거랑 똑같다
-        //이건 model.addAttribute("account, new Profile(account)) 랑 동일
+        model.addAttribute(modelMapper.map(account, Profile.class));
         return "settings/profile";
     }
 
