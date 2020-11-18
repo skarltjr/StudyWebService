@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    //위에서는 get,post등의 요청에 대한 설정
+    //위에서는 get,post등의 요청에 대한 설정 
     @Override
     public void configure(WebSecurity web) throws Exception {  //이건 WebSecurity다 !!
         web.ignoring()
