@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import javax.sql.DataSource;
 
 @Configuration
-@EnableWebSecurity// 아래 일부들은 시큐리티 체크를 안해도 접근가능하도록
+@EnableWebSecurity// 시큐리티 설정 직접 하겠다. - 아래 일부들은 시큐리티 체크를 안해도 접근가능하도록
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //이 부분은 accountservice의 userdetail 가져와서 주입하기위해
@@ -38,7 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout()
                 .logoutSuccessUrl("/"); //로그아웃 했을 때 어디로 갈지만 지정
 
-        /**  해커가 쿠키가져다 계정탈취하는 걸 최대한 안정하게 보호*/
+        /**  해커가 쿠키가져다 계정탈취하는 걸 최대한 안정하게 보호
+         * 디비에서 데이터를 가져와서
+         * 토큰을 비교*/
         http.rememberMe()
                 .userDetailsService(userDetailsService) //db에서 인증된 정보 꺼내오기 위한 구현체 / Accountservice에서 impl
                 .tokenRepository(tokenRepository());
@@ -61,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
+    //위에서는 get,post등의 요청에 대한 설정
     @Override
     public void configure(WebSecurity web) throws Exception {  //이건 WebSecurity다 !!
         web.ignoring()

@@ -102,7 +102,7 @@ public class AccountController {
         return "redirect:/";
     }
 
-    @GetMapping("/check-email-token") //이메일 인증
+    @GetMapping("/check-email-token") //이메일 인증 - token = , &email =
     public String checkEmailToken(String token, String email, Model model) {
         //이메일에 해당하는 유저가있는지 먼저확인
         Account account = accountRepository.findByEmail(email);
