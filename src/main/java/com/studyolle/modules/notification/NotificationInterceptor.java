@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class NotificationInterceptor implements HandlerInterceptor {
     private final NotificationRepository notificationRepository;
-    //결국 핸들러인터셉터도 스프링mvc에서 핸들러매핑단계에 설정을 추가하도록 
+    //결국 핸들러인터셉터도 스프링mvc에서 핸들러매핑단계에 설정을 추가하도록  - 핸들러를 찾는 핸들러매핑단계!
     
      @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
