@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Configuration
-@RequiredArgsConstructor
-public class WebConfig implements WebMvcConfigurer {
+@RequiredArgsConstructor    //스프링부트가 기본적으로 제공하는 자동설정을 사용하기위해 @EnableWebMvc는 사용하지 않는다
+public class WebConfig implements WebMvcConfigurer {    //mvc 설정을 위해 configuerer impl
 
     private final NotificationInterceptor notificationInterceptor;
 
