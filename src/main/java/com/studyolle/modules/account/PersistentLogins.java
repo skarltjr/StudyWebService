@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
+//remember me - 스키마 
 @Table(name = "persistent_logins")
 @Entity
 @Getter @Setter
