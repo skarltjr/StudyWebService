@@ -181,6 +181,7 @@ public class SettingsController {
         // 태그가 존재하면
         accountService.removeTag(account, tag);
         return ResponseEntity.ok().build();
+        //ResponseBody -> 본문에 대해 / ResponseEntity -> status 응답본문 ,헤더정보까지가능 , 특정객체타입으로라면 <Object>
     }
 
     @GetMapping("/settings/zones")
