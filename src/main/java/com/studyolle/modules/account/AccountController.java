@@ -30,7 +30,7 @@ public class AccountController {
         webDataBinder.addValidators(signUpFormValidator);
     }
 
-    @GetMapping("/sign-up")
+    @GetMapping("/sign-up")     //이렇게 get post url을 맞춰줘서 post에서 리다이렉트했을 때 또 get을 다른곳에서 처리할 필요없는것  
     public String signUpForm(Model model) {
         model.addAttribute("signUpForm", new SignUpForm());
         return "account/sign-up";
