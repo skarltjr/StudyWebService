@@ -126,7 +126,7 @@ public class StudySettingController {
     @PostMapping("/tags/remove")
     @ResponseBody   // 리턴타입을 본문에담아 응답하고 
     public ResponseEntity removeTag(@CurrentUser Account account, @PathVariable String path,
-                                    @RequestBody TagForm tagForm) {  // requestBody로 본문의 담긴 객체를 사용한다
+                                    @RequestBody TagForm tagForm) {  // requestBody로 본문을 htpp메세지컨버터로 객체로 변환해서 받아서 사용
         Study study = studyService.getStudyToUpdateTag(account, path);
         Tag tag = tagRepository.findByTitle(tagForm.getTagTitle());
         if (tag == null) {
