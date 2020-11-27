@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
-@ControllerAdvice
+@ControllerAdvice   // ControllerAdvice를 통해 (전역 컨트롤러)즉 모든 컨트롤러에서 전반적으로 로그를 남기기 위해 
 public class ExceptionAdvice {
 
     /** 런타임동안 누가 어떤 요청으로 에러를 발생시킨건지 로그 남기기*/
