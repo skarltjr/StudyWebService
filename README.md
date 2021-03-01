@@ -3,6 +3,7 @@
 - Back-end = 스프링 시큐리티, 스프링부트, 스프링데이터jpa, jpa, 쿼리dsl을 이용한 스터디 웹 서비스
 - DataBase = PostgreSql 
 - Front = Nodejs-NPM   Thymeleaf / Bootstrap / tagify / font-awesome / summernote 등 템플릿엔진 및 오픈소스 사용
+- 모든 코드 & 에러 보완 및 수정 = https://github.com/skarltjr/allhourstudy
 
 ## 서비스 미리보기
 - ![ezgif com-gif-maker](https://user-images.githubusercontent.com/62214428/97904717-3ced3800-1d84-11eb-8576-148625c0477a.gif)
